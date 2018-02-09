@@ -40,6 +40,10 @@ Copyright (c) 2014-2017 John Preston, https://desktop.telegram.org
 
 namespace Window {
 
+	// TODO: move out to lang file or CMake with metainfo.
+	constexpr const char *messengerAboutUrl = "https://github.com/procxx/kepka";
+	constexpr const char *messengerChangeLogUrl = "https://github.com/procxx/kepka/releases";
+	
 MainMenu::MainMenu(QWidget *parent) : TWidget(parent)
 , _menu(this, st::mainMenu)
 , _telegram(this, st::mainMenuTelegramLabel)
@@ -66,9 +70,9 @@ MainMenu::MainMenu(QWidget *parent) : TWidget(parent)
 	refreshMenu();
 
 	_telegram->setRichText(textcmdLink(1, str_const_toString(AppName)));
-	_telegram->setLink(1, MakeShared<UrlClickHandler>(qsl("https://desktop.telegram.org")));
+	_telegram->setLink(1, MakeShared<UrlClickHandler>(qsl(messengerAboutUrl)));
 	_version->setRichText(textcmdLink(1, lng_settings_current_version(lt_version, currentVersionText())) + QChar(' ') + QChar(8211) + QChar(' ') + textcmdLink(2, lang(lng_menu_about)));
-	_version->setLink(1, MakeShared<UrlClickHandler>(qsl("https://desktop.telegram.org/changelog")));
+	_version->setLink(1, MakeShared<UrlClickHandler>(qsl(messengerChangeLogUrl)));
 	_version->setLink(2, MakeShared<LambdaClickHandler>([] { Ui::show(Box<AboutBox>()); }));
 
 	subscribe(Auth().downloaderTaskFinished(), [this] { update(); });
